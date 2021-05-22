@@ -1,0 +1,188 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2 class="text-center m-3">Smart Home <span id="time" class="m-3"></span></h2>
+<hr />
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="card">
+            <div class="card-header bg-primary text-white">Devices</div>
+            <div class="card-body">
+                <div class="m-3">
+                    <span class="badge badge-success" style="font-size:15px;">Led 1:</span>
+                    <input class="switch" data-room="1" type="checkbox" data-toggle="toggle" data-onstyle="primary" />
+                    <span class="float-right off" data-room="1"></span>
+                </div>
+                <hr />
+                <div class="m-3">
+                    <span class="badge badge-success" style="font-size:15px;">Led 2:</span>
+                    <input class="switch" data-room="2" type="checkbox" data-toggle="toggle" data-onstyle="primary" />
+                    <span class="float-right off" data-room="2"></span>
+                </div>
+                <hr />
+                <div class="m-3">
+                    <span class="badge badge-success" style="font-size:15px;">Led 3:</span>
+                    <input class="switch" data-room="3" type="checkbox" data-toggle="toggle" data-onstyle="primary" />
+                    <span class="float-right off" data-room="3"></span>
+                </div>
+                <hr />
+                <div class="m-3">
+                    <span class="badge badge-success" style="font-size:15px;">Led 4:</span>
+                    <input class="switch" data-room="4" type="checkbox" data-toggle="toggle" data-onstyle="primary" />
+                    <span class="float-right off" data-room="4"></span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-center">
+                    <input class="btn btn-primary btn-control" type="button" value="Turn on all">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        $(() => {
+            toastr.options = {
+                "preventDuplicates": true
+            }
+
+            $switch = $(".switch")
+
+            $switch.on('change', async (e) => {
+                var target = e.target
+                var roomNo = $(target).data('room')
+
+                var switchElement = $(`.switch[data-room='${roomNo}']`)
+                var bulbElement = $(`span[data-room='${roomNo}']`)
+
+                var switchValue = $(target).prop('checked')
+
+                var command = switchValue == true ? 'on' : 'off'
+                var message = roomNo + (command == 'on' ? '1' : (command == 'off' ? '0' : ''))
+
+                $.ajax({
+                    url: `/Home/PublishMessage?message=${message}`,
+                    method: 'Post',
+                    success: (result) => {
+                        if (switchValue)
+                            $(bulbElement).removeClass("off").addClass("on")
+                        else
+                            $(bulbElement).removeClass("on").addClass("off")
+
+                        toastr.success('Command completed successfully!')
+                    },
+                    error: (error) => {
+                        $(switchElement).bootstrapToggle('off', true)
+                        $(bulbElement).removeClass("on").addClass("off")
+
+                        toastr.error('Could not complete command. Please try again!')
+                    }
+                })
+
+            })
+
+            $btnControl = $(".btn-control")
+            $btnControl.on('click', async function() {
+                var textValue = $btnControl.val()
+                var message = (textValue == "Turn on all" ? "01" : (textValue == "Turn off all" ? "00" : ""))
+                $.ajax({
+                    url: `/Home/PublishMessage?message=${message}`,
+                    method: 'Post',
+                    success: (result) => {
+                        if (message == "01") {
+                            for (let i = 1; i <= 4; i++) {
+                                $(`.switch[data-room='${i}']`).bootstrapToggle('on', true)
+                                $(`span[data-room='${i}']`).removeClass("off").addClass("on")
+                            }
+                            $btnControl.val("Turn off all")
+                        }
+                        else {
+                            for (let i = 1; i <= 4; i++) {
+                                $(`.switch[data-room='${i}']`).bootstrapToggle('off', true)
+                                $(`span[data-room='${i}']`).removeClass("on").addClass("off")
+                            }
+                            $btnControl.val("Turn on all")
+                        }
+                        toastr.success('Command completed successfully!')
+                    },
+                    error: (error) => {
+                        alert(error)
+                        toastr.error('Could not complete command. Please try again!')
+                    }
+                })
+            })
+
+            setInterval(function () {
+                $.ajax({
+                    url: `/Home/ReceiveMessage`,
+                    method: 'Get',
+                    success: (result) => {
+                        var roomNo = result[0]
+                        var command = (result[1] == '1' ? 'on' : (result[1] == '0' ? 'off' : ''))
+                        var switchElement = $(`.switch[data-room='${roomNo}']`)
+                        var bulbElement = $(`span[data-room='${roomNo}']`)
+                        switch (roomNo) {
+                            case '0':
+                                if (command == 'on') {
+                                    for (let i = 1; i <= 4; i++) {
+                                        $(`.switch[data-room='${i}']`).bootstrapToggle('on', true)
+                                        $(`span[data-room='${i}']`).removeClass("off").addClass("on")
+                                    }
+                                    $btnControl.val("Turn off all")     
+                                    toastr.success('Just received the remote command successfully!')
+                                }
+                                else if (command == 'off'){
+                                    for (let i = 1; i <= 4; i++) {
+                                        $(`.switch[data-room='${i}']`).bootstrapToggle('off', true)
+                                        $(`span[data-room='${i}']`).removeClass("on").addClass("off")
+                                    }
+                                    $btnControl.val("Turn on all")    
+                                    toastr.success('Just received the remote command successfully!')
+                                }                                
+                                break;
+                            case '1':
+                            case '2':
+                            case '3':
+                            case '4':
+                                if (command == 'on') {
+                                    $(switchElement).bootstrapToggle('on', true)
+                                    $(bulbElement).removeClass("off").addClass("on")
+                                    toastr.success('Just received the remote command successfully!')
+                                }
+                                else if (command == 'off'){
+                                    $(switchElement).bootstrapToggle('off', true)
+                                    $(bulbElement).removeClass("on").addClass("off")
+                                    toastr.success('Just received the remote command successfully!')
+                                }                                
+                                break;
+                            default:
+                                console.log("OK DEFAULT")
+                                break;
+                        }
+                        $.ajax({
+                            url: `/Home/setMessageDefault`,
+                            method: 'Put',
+                            success: (result) => { },
+                            error: (error) => {
+                                alert(error)
+                            }
+                        })
+                    },
+                    error: (error) => {
+                        alert(error);
+                    }
+                })
+            }, 1000)
+
+            setInterval(function () {
+                var date = new Date().toLocaleString()
+                $("#time").html(date)
+            }, 1000)
+
+        })
+    </script>
+}
