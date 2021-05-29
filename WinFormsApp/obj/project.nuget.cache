@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ITnvUozYo2unW/AUO7XLk8f0zdMOIjkvCslesM3ydKBh2VkhuDvgs17yQw6OOitWcvMnRAYLhKXo+4yqas4PkA==",
+  "dgSpecHash": "oLj9FCkQK7N5gvMCEm5UlcdDu8OUTdfNt1gwqX3OewnT2ocbnvm4ACSchc6bvHbgMNo9JLbLBTPwt97ZXH8CHg==",
   "success": true,
   "projectFilePath": "D:\\tai lieu\\Nam 4\\20202\\Lap trinh nang cao\\LTNC-20202\\WinFormsApp\\WinFormsApp.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\admin\\.nuget\\packages\\m2mqtt\\4.3.0\\m2mqtt.4.3.0.nupkg.sha512"
+    "C:\\Users\\admin\\.nuget\\packages\\m2mqtt\\4.3.0\\m2mqtt.4.3.0.nupkg.sha512",
+    "C:\\Users\\admin\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": [
     {

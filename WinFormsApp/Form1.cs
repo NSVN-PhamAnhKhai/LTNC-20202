@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
+using WinFormsApp.Model;
 
 namespace WinFormsApp
 {
@@ -16,25 +20,50 @@ namespace WinFormsApp
     {
         public Form1()
         {
+            clientHttp = new HttpClient();
+            serializerOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
             InitializeComponent();
         }
+        HttpClient clientHttp;
+        JsonSerializerOptions serializerOptions;
 
-        static MqttClient client;
+        static MqttClient clientMqtt;
+        public List<LedModel> ledList { get; private set; }
+        static bool[] flag = { false, false, false, false, false };
+
+        private List<LedModel> ledsList;
+        public List<LedModel> LedsList
+        {
+            get
+            {
+                return ledsList;
+            }
+            set
+            {
+                ledsList = value;
+            }
+        }
+        public LedModel led { get; set; }
+        public int id { get; set; }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             try
             {
-                client = new MqttClient("broker.emqx.io", 1883, false, MqttSslProtocols.None, null, null);
-                client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
-                byte code = client.Connect(Guid.NewGuid().ToString());
+                clientMqtt = new MqttClient("broker.emqx.io", 1883, false, MqttSslProtocols.None, null, null);
+                clientMqtt.ProtocolVersion = MqttProtocolVersion.Version_3_1;
+                byte code = clientMqtt.Connect(Guid.NewGuid().ToString());
                 if (code == 0)
                 {
                     MessageBox.Show(this, "Connect Successfully", "Message", MessageBoxButtons.OK, MessageBoxIcon.Question);
 
                     //Subcribe Topic
-                    client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
-                    client.Subscribe(new string[] {"Mobile/LEDControl", "Web/LEDControl", "Hardware/LEDControl"}, new byte[] {1, 1, 1});
+                    clientMqtt.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+                    clientMqtt.Subscribe(new string[] {"Mobile/LEDControl", "Web/LEDControl", "Hardware/LEDControl"}, new byte[] {1, 1, 1});
                 }
 
                 else MessageBox.Show(this, "Connect Fail", "Message", MessageBoxButtons.OK, MessageBoxIcon.Question);
@@ -43,6 +72,52 @@ namespace WinFormsApp
             catch (Exception)
             {
                 MessageBox.Show(this, "Wrong Format", "Message", MessageBoxButtons.OK, MessageBoxIcon.Question);
+            }
+            GetDataFromWebAPI();
+        }
+
+        async void GetDataFromWebAPI()
+        {
+            LedsList = await GetLedData();
+            if (LedsList[0].isOn == "off")
+            {
+                this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[1] = false;
+            }
+            else
+            {
+                this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[1] = true;
+            }
+            if (LedsList[1].isOn == "off")
+            {
+                this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[2] = false;
+            }
+            else
+            {
+                this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[2] = true;
+            }
+            if (LedsList[2].isOn == "off")
+            {
+                this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[3] = false;
+            }
+            else
+            {
+                this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[3] = true;
+            }
+            if (LedsList[3].isOn == "off")
+            {
+                this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[4] = false;
+            }
+            else
+            {
+                this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[4] = true;
             }
         }
 
@@ -74,59 +149,77 @@ namespace WinFormsApp
                 case 0:
                     if (status == 0)
                     {
-                        btnLED1.BackColor = Color.Gray;
-                        btnLED2.BackColor = Color.Gray;
-                        btnLED3.BackColor = Color.Gray;
-                        btnLED4.BackColor = Color.Gray;
-                        btnAllControl.Text = "All ON";
+                        this.btnAllControl.Image = WinFormsApp.Properties.Resources.power_btn_on;
+                        flag[0] = false;
+                        this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_off;
+                        flag[1] = false;
+                        this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_off;
+                        flag[2] = false;
+                        this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_off;
+                        flag[3] = false;
+                        this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_off;
+                        flag[4] = false;
                     }
                     else
                     {
-                        btnLED1.BackColor = Color.GreenYellow;
-                        btnLED2.BackColor = Color.GreenYellow;
-                        btnLED3.BackColor = Color.GreenYellow;
-                        btnLED4.BackColor = Color.GreenYellow;
-                        btnAllControl.Text = "All OFF";
+                        this.btnAllControl.Image = WinFormsApp.Properties.Resources.power_btn_off;
+                        flag[0] = true;
+                        this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_on;
+                        flag[1] = true;
+                        this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_on;
+                        flag[2] = true;
+                        this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_on;
+                        flag[3] = true;
+                        this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_on;
+                        flag[4] = true;
                     }
                     break;
                 case 1:
                     if (status == 0)
                     {
-                        btnLED1.BackColor = Color.Gray;
+                        this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_off;
+                        flag[1] = false;
                     }
                     else
                     {
-                        btnLED1.BackColor = Color.GreenYellow;
+                        this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_on;
+                        flag[1] = true;
                     }
                     break;
                 case 2:
                     if (status == 0)
                     {
-                        btnLED2.BackColor = Color.Gray;
+                        this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_off;
+                        flag[2] = false;
                     }
                     else
                     {
-                        btnLED2.BackColor = Color.GreenYellow;
+                        this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_on;
+                        flag[2] = true;
                     }
                     break;
                 case 3:
                     if (status == 0)
                     {
-                        btnLED3.BackColor = Color.Gray;
+                        this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_off;
+                        flag[3] = false;
                     }
                     else
                     {
-                        btnLED3.BackColor = Color.GreenYellow;
+                        this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_on;
+                        flag[3] = true;
                     }
                     break;
                 case 4:
                     if (status == 0)
                     {
-                        btnLED4.BackColor = Color.Gray;
+                        this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_off;
+                        flag[4] = false;
                     }
                     else
                     {
-                        btnLED4.BackColor = Color.GreenYellow;
+                        this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_on;
+                        flag[4] = true;
                     }
                     break;
                 default:
@@ -134,93 +227,272 @@ namespace WinFormsApp
             }
         }
 
-        private void btnLED1_Click(object sender, EventArgs e)
+        private async void btnLED1_Click(object sender, EventArgs e)
         {
-            string currentColorBtn = btnLED1.BackColor.ToString();
-            if(currentColorBtn.IndexOf("Gray") != -1)
+            id = 1;
+            LedModel led;
+            if (!flag[1])
             {
-                client.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("11"));
-                btnLED1.BackColor = Color.GreenYellow;
+                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("11"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[1] = true;
+                led = new LedModel()
+                {
+                    ID = 1,
+                    isOn = "on"
+                };
             }
             else
             {
-                client.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("10"));
-                btnLED1.BackColor = Color.Gray;
+                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("10"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[1] = false;
+                led = new LedModel()
+                {
+                    ID = 1,
+                    isOn = "off"
+                };
             }
+            await RefreshLed(id, led);
         }
 
-        private void btnLED2_Click(object sender, EventArgs e)
+        private async void btnLED2_Click(object sender, EventArgs e)
         {
-            string currentColorBtn = btnLED2.BackColor.ToString();
-            if (currentColorBtn.IndexOf("Gray") != -1)
+            id = 2;
+            LedModel led;
+            if (!flag[2])
             {
-                client.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("21"));
-                btnLED2.BackColor = Color.GreenYellow;
+                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("21"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[2] = true;
+                led = new LedModel()
+                {
+                    ID = 2,
+                    isOn = "on"
+                };
             }
             else
             {
-                client.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("20"));
-                btnLED2.BackColor = Color.Gray;
+                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("20"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[2] = false;
+                led = new LedModel()
+                {
+                    ID = 2,
+                    isOn = "off"
+                };
             }
+            await RefreshLed(id, led);
         }
 
-        private void btnLED3_Click(object sender, EventArgs e)
+        private async void btnLED3_Click(object sender, EventArgs e)
         {
-            string currentColorBtn = btnLED3.BackColor.ToString();
-            if (currentColorBtn.IndexOf("Gray") != -1)
+            id = 3;
+            LedModel led;
+            if (!flag[3])
             {
-                client.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("31"));
-                btnLED3.BackColor = Color.GreenYellow;
+                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("31"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[3] = true;
+                led = new LedModel()
+                {
+                    ID = 3,
+                    isOn = "on"
+                };
             }
             else
             {
-                client.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("30"));
-                btnLED3.BackColor = Color.Gray;
+                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("30"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[3] = false;
+                led = new LedModel()
+                {
+                    ID = 3,
+                    isOn = "off"
+                };
             }
+            await RefreshLed(id, led);
         }
 
-        private void btnLED4_Click(object sender, EventArgs e)
+        private async void btnLED4_Click(object sender, EventArgs e)
         {
-            string currentColorBtn = btnLED4.BackColor.ToString();
-            if (currentColorBtn.IndexOf("Gray") != -1)
+            id = 4;
+            LedModel led;
+            if (!flag[4])
             {
-                client.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("41"));
-                btnLED4.BackColor = Color.GreenYellow;
+                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("41"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[4] = true;
+                led = new LedModel()
+                {
+                    ID = 4,
+                    isOn = "on"
+                };
             }
             else
             {
-                client.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("40"));
-                btnLED4.BackColor = Color.Gray;
+                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("40"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[4] = false;
+                led = new LedModel()
+                {
+                    ID = 4,
+                    isOn = "off"
+                };
             }
+            await RefreshLed(id, led);
         }
 
-        private void btnAllControl_Click(object sender, EventArgs e)
+        private async void btnAllControl_Click(object sender, EventArgs e)
         {
-            string textBtn = btnAllControl.Text;
-            if (textBtn.IndexOf("All ON") != -1)
+            if (!flag[0])
             {
-                client.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("01"));                
-                btnLED1.BackColor = Color.GreenYellow;
-                btnLED2.BackColor = Color.GreenYellow;
-                btnLED3.BackColor = Color.GreenYellow;
-                btnLED4.BackColor = Color.GreenYellow;
-                btnAllControl.Text = "All OFF";
+                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("01"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                this.btnAllControl.Image = WinFormsApp.Properties.Resources.power_btn_off;
+                flag[0] = true;
+                this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[1] = true;
+                this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[2] = true;
+                this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[3] = true;
+                this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_on;
+                flag[4] = true;
+                for (int i = 1; i <= 4; i++)
+                {
+                    led = new LedModel()
+                    {
+                        ID = i,
+                        isOn = "on"
+                    };
+                    await RefreshLed(i, led);
+                }
             }
             else
             {
-                client.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("00"));                
-                btnLED1.BackColor = Color.Gray;
-                btnLED2.BackColor = Color.Gray;
-                btnLED3.BackColor = Color.Gray;
-                btnLED4.BackColor = Color.Gray;
-                btnAllControl.Text = "All ON";
+                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("00"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                this.btnAllControl.Image = WinFormsApp.Properties.Resources.power_btn_on;
+                flag[0] = false;
+                this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[1] = false;
+                this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[2] = false;
+                this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[3] = false;
+                this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_off;
+                flag[4] = false;
+                for (int i = 1; i <= 4; i++)
+                {
+                    led = new LedModel()
+                    {
+                        ID = i,
+                        isOn = "off"
+                    };
+                    await RefreshLed(i, led);
+                }
             }
         }
 
         private void btnExit_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
-            client.Disconnect();
+            clientMqtt.Disconnect();
+        }
+
+        public async Task<List<LedModel>> GetLedData()
+        {
+            string base_url = "http://ltnc-api.somee.com/api/tbled/getall/";
+
+            ledList = new List<LedModel>();
+
+            Uri uri = new Uri(string.Format(base_url, string.Empty));
+            try
+            {
+                HttpResponseMessage response = await clientHttp.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    ledList = JsonConvert.DeserializeObject<List<LedModel>>(content);
+                    return ledList;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
+        }
+
+        public async Task<bool> CreateLed(LedModel led)
+        {
+            string base_url = "http://localhost/ledapi/api/tblleds";
+            Uri uri = new Uri(string.Format(base_url, string.Empty));
+            try
+            {
+
+                string json = System.Text.Json.JsonSerializer.Serialize<LedModel>(led, serializerOptions);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = null;
+                response = await clientHttp.PostAsync(uri, content);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await Task.FromResult(true);
+                }
+                return await Task.FromResult(false);
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(false);
+            }
+        }
+        public async Task<bool> RefreshLed(int id, LedModel led)
+        {
+            string base_url = "http://ltnc-api.somee.com/api/tbled/put";
+            Uri uri = new Uri(string.Format(base_url, id));
+            try
+            {
+
+                string json = System.Text.Json.JsonSerializer.Serialize<LedModel>(led, serializerOptions);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = null;
+
+                response = await clientHttp.PutAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return await Task.FromResult(true);
+                }
+                return await Task.FromResult(false);
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(false);
+            }
+        }
+        public async Task<bool> DeleteLed(string id)
+        {
+            string base_url = "http://localhost/ledapi/api/tblleds/{0}";
+
+            Uri uri = new Uri(string.Format(base_url, id));
+
+            try
+            {
+                HttpResponseMessage response = await clientHttp.DeleteAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await Task.FromResult(true);
+                }
+                return await Task.FromResult(false);
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(false);
+            }
         }
     }    
 }
