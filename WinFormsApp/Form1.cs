@@ -52,6 +52,7 @@ namespace WinFormsApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            timer1.Start();
             try
             {
                 clientMqtt = new MqttClient("broker.emqx.io", 1883, false, MqttSslProtocols.None, null, null);
@@ -493,6 +494,12 @@ namespace WinFormsApp
             {
                 return await Task.FromResult(false);
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            DateTime dateTime = DateTime.Now;
+            this.lblTime.Text = dateTime.ToString();
         }
     }    
 }

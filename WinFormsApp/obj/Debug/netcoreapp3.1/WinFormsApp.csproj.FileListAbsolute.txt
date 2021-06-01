@@ -23,7 +23,6 @@ D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\bin\Debug\netc
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\bin\Debug\netcoreapp3.1\WinFormsApp.dll
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\bin\Debug\netcoreapp3.1\WinFormsApp.pdb
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\bin\Debug\netcoreapp3.1\M2Mqtt.Net.dll
-D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\obj\Debug\netcoreapp3.1\WinFormsApp.csprojAssemblyReference.cache
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\obj\Debug\netcoreapp3.1\WinFormsApp.Form1.resources
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\obj\Debug\netcoreapp3.1\WinFormsApp.Properties.Resources.resources
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\obj\Debug\netcoreapp3.1\WinFormsApp.csproj.GenerateResource.cache
@@ -34,3 +33,6 @@ D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\obj\Debug\netc
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\obj\Debug\netcoreapp3.1\WinFormsApp.dll
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\obj\Debug\netcoreapp3.1\WinFormsApp.pdb
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\obj\Debug\netcoreapp3.1\WinFormsApp.genruntimeconfig.cache
+D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\obj\Debug\netcoreapp3.1\WinFormsApp.csproj.AssemblyReference.cache
+D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WinFormsApp\obj\Debug\netcoreapp3.1\WinFormsApp.Login.resources

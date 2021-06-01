@@ -9,7 +9,6 @@ D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\bin\Debug\netcoreap
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\bin\Debug\netcoreapp3.1\WebApp.Views.dll
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\bin\Debug\netcoreapp3.1\WebApp.Views.pdb
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\bin\Debug\netcoreapp3.1\M2Mqtt.Net.dll
-D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\WebApp.AssemblyInfoInputs.cache
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\WebApp.AssemblyInfo.cs
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\WebApp.csproj.CoreCompileInputs.cache
@@ -36,3 +35,4 @@ D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreap
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\WebApp.dll
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\WebApp.pdb
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\WebApp.genruntimeconfig.cache
+D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\WebApp.csproj.AssemblyReference.cache

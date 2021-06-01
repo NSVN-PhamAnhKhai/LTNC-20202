@@ -29,6 +29,7 @@ namespace WinFormsApp
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnLED1 = new System.Windows.Forms.Button();
             this.btnLED2 = new System.Windows.Forms.Button();
             this.btnLED3 = new System.Windows.Forms.Button();
@@ -40,6 +41,9 @@ namespace WinFormsApp
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnLED1
@@ -49,9 +53,9 @@ namespace WinFormsApp
             this.btnLED1.FlatAppearance.BorderSize = 0;
             this.btnLED1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLED1.Image = global::WinFormsApp.Properties.Resources.lamp_off;
-            this.btnLED1.Location = new System.Drawing.Point(104, 168);
+            this.btnLED1.Location = new System.Drawing.Point(99, 178);
             this.btnLED1.Name = "btnLED1";
-            this.btnLED1.Size = new System.Drawing.Size(65, 65);
+            this.btnLED1.Size = new System.Drawing.Size(75, 90);
             this.btnLED1.TabIndex = 0;
             this.btnLED1.UseVisualStyleBackColor = false;
             this.btnLED1.Click += new System.EventHandler(this.btnLED1_Click);
@@ -63,9 +67,9 @@ namespace WinFormsApp
             this.btnLED2.FlatAppearance.BorderSize = 0;
             this.btnLED2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLED2.Image = global::WinFormsApp.Properties.Resources.lamp_off;
-            this.btnLED2.Location = new System.Drawing.Point(234, 168);
+            this.btnLED2.Location = new System.Drawing.Point(229, 178);
             this.btnLED2.Name = "btnLED2";
-            this.btnLED2.Size = new System.Drawing.Size(65, 65);
+            this.btnLED2.Size = new System.Drawing.Size(75, 90);
             this.btnLED2.TabIndex = 0;
             this.btnLED2.UseVisualStyleBackColor = false;
             this.btnLED2.Click += new System.EventHandler(this.btnLED2_Click);
@@ -77,9 +81,9 @@ namespace WinFormsApp
             this.btnLED3.FlatAppearance.BorderSize = 0;
             this.btnLED3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLED3.Image = global::WinFormsApp.Properties.Resources.lamp_off;
-            this.btnLED3.Location = new System.Drawing.Point(364, 168);
+            this.btnLED3.Location = new System.Drawing.Point(359, 178);
             this.btnLED3.Name = "btnLED3";
-            this.btnLED3.Size = new System.Drawing.Size(65, 65);
+            this.btnLED3.Size = new System.Drawing.Size(75, 90);
             this.btnLED3.TabIndex = 0;
             this.btnLED3.UseVisualStyleBackColor = false;
             this.btnLED3.Click += new System.EventHandler(this.btnLED3_Click);
@@ -91,9 +95,9 @@ namespace WinFormsApp
             this.btnLED4.FlatAppearance.BorderSize = 0;
             this.btnLED4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLED4.Image = global::WinFormsApp.Properties.Resources.lamp_off;
-            this.btnLED4.Location = new System.Drawing.Point(494, 168);
+            this.btnLED4.Location = new System.Drawing.Point(489, 178);
             this.btnLED4.Name = "btnLED4";
-            this.btnLED4.Size = new System.Drawing.Size(65, 65);
+            this.btnLED4.Size = new System.Drawing.Size(75, 90);
             this.btnLED4.TabIndex = 0;
             this.btnLED4.UseVisualStyleBackColor = false;
             this.btnLED4.Click += new System.EventHandler(this.btnLED4_Click);
@@ -105,16 +109,16 @@ namespace WinFormsApp
             this.btnAllControl.FlatAppearance.BorderSize = 0;
             this.btnAllControl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAllControl.Image = global::WinFormsApp.Properties.Resources.power_btn_on;
-            this.btnAllControl.Location = new System.Drawing.Point(623, 168);
+            this.btnAllControl.Location = new System.Drawing.Point(618, 178);
             this.btnAllControl.Name = "btnAllControl";
-            this.btnAllControl.Size = new System.Drawing.Size(65, 65);
+            this.btnAllControl.Size = new System.Drawing.Size(75, 90);
             this.btnAllControl.TabIndex = 0;
             this.btnAllControl.UseVisualStyleBackColor = false;
             this.btnAllControl.Click += new System.EventHandler(this.btnAllControl_Click);
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(348, 270);
+            this.btnExit.Location = new System.Drawing.Point(343, 295);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(94, 29);
             this.btnExit.TabIndex = 1;
@@ -128,9 +132,9 @@ namespace WinFormsApp
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.textBox1.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.textBox1.Location = new System.Drawing.Point(104, 122);
+            this.textBox1.Location = new System.Drawing.Point(99, 132);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(65, 27);
+            this.textBox1.Size = new System.Drawing.Size(75, 27);
             this.textBox1.TabIndex = 2;
             this.textBox1.Text = "LED 1";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -141,9 +145,9 @@ namespace WinFormsApp
             this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.textBox2.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.textBox2.Location = new System.Drawing.Point(234, 122);
+            this.textBox2.Location = new System.Drawing.Point(229, 132);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(65, 27);
+            this.textBox2.Size = new System.Drawing.Size(75, 27);
             this.textBox2.TabIndex = 2;
             this.textBox2.Text = "LED 2";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -154,9 +158,9 @@ namespace WinFormsApp
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.textBox3.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.textBox3.Location = new System.Drawing.Point(364, 122);
+            this.textBox3.Location = new System.Drawing.Point(359, 132);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(65, 27);
+            this.textBox3.Size = new System.Drawing.Size(75, 27);
             this.textBox3.TabIndex = 2;
             this.textBox3.Text = "LED 3";
             this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -167,9 +171,9 @@ namespace WinFormsApp
             this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.textBox4.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.textBox4.Location = new System.Drawing.Point(494, 122);
+            this.textBox4.Location = new System.Drawing.Point(489, 132);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(65, 27);
+            this.textBox4.Size = new System.Drawing.Size(75, 27);
             this.textBox4.TabIndex = 2;
             this.textBox4.Text = "LED 4";
             this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -180,18 +184,48 @@ namespace WinFormsApp
             this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.textBox5.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.textBox5.Location = new System.Drawing.Point(610, 122);
+            this.textBox5.Location = new System.Drawing.Point(610, 132);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(93, 27);
             this.textBox5.TabIndex = 2;
             this.textBox5.Text = "Control all";
             this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(99, 51);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(173, 38);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Control LED";
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.lblTime.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTime.ForeColor = System.Drawing.Color.White;
+            this.lblTime.Location = new System.Drawing.Point(605, 0);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(70, 28);
+            this.lblTime.TabIndex = 4;
+            this.lblTime.Text = "label2";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblTime);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
@@ -224,6 +258,9 @@ namespace WinFormsApp
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
