@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApp.Controllers
 {
@@ -18,22 +19,16 @@ namespace WebApp.Controllers
             new Account { Name = "khaipa", Password = "20172617"},
             new Account { Name = "thangnv", Password = "20172808"}
 
-        };
-        public List<Account> AccList
-        {
-            get
-            {
-                return accList;
-            }
-            set
-            {
-                accList = value;
-            }
-        }
+        };        
 
         [HttpGet]
         public IActionResult Login()
         {
+            string session = HttpContext.Session.GetString("UserLogin");
+            if (session != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -48,7 +43,8 @@ namespace WebApp.Controllers
                 foreach(var item in users)
                 {
                     if(item.Password == model.Password)
-                    {                                             
+                    {
+                        HttpContext.Session.SetString("UserLogin", model.Name);
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -57,7 +53,8 @@ namespace WebApp.Controllers
         }
 
         public ActionResult Logout()
-        {           
+        {
+            HttpContext.Session.Remove("UserLogin");
             return RedirectToAction("Login", "Account");
         }
     }

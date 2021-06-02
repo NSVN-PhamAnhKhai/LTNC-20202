@@ -612,7 +612,7 @@ namespace WinFormsApp
         private void timer1_Tick(object sender, EventArgs e)
         {
             DateTime dateTime = DateTime.Now;
-            this.lblTime.Text = dateTime.ToLongTimeString() + "                    ";
+            this.lblTime.Text = dateTime.ToLongTimeString();
             this.lblDate.Text = dateTime.ToLongDateString();
         }
     }    

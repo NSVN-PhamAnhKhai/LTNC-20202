@@ -11,7 +11,15 @@ namespace WinFormsApp
 {
     public partial class Login : Form
     {
-        public List<Users> userList = new List<Users>();
+        static List<Users> userList = new List<Users> 
+        {        
+            new Users{userName = "admin", password = "admin"},
+            new Users{userName = "dongbx", password = "20172473"},
+            new Users{userName = "datnt", password = "20172451"},
+            new Users{userName = "trungpq", password = "20172875"},
+            new Users{userName = "khaipa", password = "20172617"},
+            new Users{userName = "thangnv", password = "20172808"}
+        };
         public Login()
         {
             Form1_Load();
@@ -20,15 +28,7 @@ namespace WinFormsApp
 
         private void Form1_Load()
         {
-            if (userList.Count == 0)
-            {
-                Users admin = new Users()
-                {
-                    userName = "admin",
-                    password = "admin",
-                };
-                userList.Add(admin);
-            }
+            
         }
 
         private void Login_Load(object sender, EventArgs e)
