@@ -1,0 +1,29 @@
+﻿@model List<HistoryModel>
+@{ Layout = "_Layout";}
+
+<table class="table table-sm table-striped table-bordered m-2" id="myTable">
+    <thead>
+        <tr>
+            <th>DateTime</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Turn</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.time</td>
+                <td>@r.start</td>
+                <td>@r.end</td>
+                <td>@r.turn</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section History{
+    <script>
+        $('#myTable').ddTableFilter();
+    </script>
+}

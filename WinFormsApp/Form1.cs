@@ -48,6 +48,7 @@ namespace WinFormsApp
             }
         }
         public LedModel led { get; set; }
+        public HistoryModel history { get; set; }
         public int id { get; set; }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -64,7 +65,7 @@ namespace WinFormsApp
 
                     //Subcribe Topic
                     clientMqtt.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
-                    clientMqtt.Subscribe(new string[] {"Mobile/LEDControl", "Web/LEDControl", "Hardware/LEDControl"}, new byte[] {1, 1, 1});
+                    clientMqtt.Subscribe(new string[] { "ltnc/ledcontrol" }, new byte[] {1});
                 }
 
                 else MessageBox.Show(this, "Connect Fail", "Message", MessageBoxButtons.OK, MessageBoxIcon.Question);
@@ -234,7 +235,7 @@ namespace WinFormsApp
             LedModel led;
             if (!flag[1])
             {
-                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("11"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                clientMqtt.Publish("ltnc/ledcontrol", Encoding.UTF8.GetBytes("11"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
                 this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_on;
                 flag[1] = true;
                 led = new LedModel()
@@ -242,10 +243,17 @@ namespace WinFormsApp
                     ID = 1,
                     isOn = "on"
                 };
+                history = new HistoryModel()
+                {
+                    time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                    start = "PC",
+                    end = 1,
+                    turn = "on",
+                };
             }
             else
             {
-                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("10"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                clientMqtt.Publish("ltnc/ledcontrol", Encoding.UTF8.GetBytes("10"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
                 this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_off;
                 flag[1] = false;
                 led = new LedModel()
@@ -253,8 +261,16 @@ namespace WinFormsApp
                     ID = 1,
                     isOn = "off"
                 };
+                history = new HistoryModel()
+                {
+                    time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                    start = "PC",
+                    end = 1,
+                    turn = "off",
+                };
             }
             await RefreshLed(id, led);
+            await CreateHistory(history);
         }
 
         private async void btnLED2_Click(object sender, EventArgs e)
@@ -263,7 +279,7 @@ namespace WinFormsApp
             LedModel led;
             if (!flag[2])
             {
-                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("21"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                clientMqtt.Publish("ltnc/ledcontrol", Encoding.UTF8.GetBytes("21"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
                 this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_on;
                 flag[2] = true;
                 led = new LedModel()
@@ -271,10 +287,17 @@ namespace WinFormsApp
                     ID = 2,
                     isOn = "on"
                 };
+                history = new HistoryModel()
+                {
+                    time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                    start = "PC",
+                    end = 2,
+                    turn = "on",
+                };
             }
             else
             {
-                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("20"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                clientMqtt.Publish("ltnc/ledcontrol", Encoding.UTF8.GetBytes("20"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
                 this.btnLED2.Image = WinFormsApp.Properties.Resources.lamp_off;
                 flag[2] = false;
                 led = new LedModel()
@@ -282,8 +305,16 @@ namespace WinFormsApp
                     ID = 2,
                     isOn = "off"
                 };
+                history = new HistoryModel()
+                {
+                    time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                    start = "PC",
+                    end = 2,
+                    turn = "off",
+                };
             }
             await RefreshLed(id, led);
+            await CreateHistory(history);
         }
 
         private async void btnLED3_Click(object sender, EventArgs e)
@@ -292,7 +323,7 @@ namespace WinFormsApp
             LedModel led;
             if (!flag[3])
             {
-                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("31"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                clientMqtt.Publish("ltnc/ledcontrol", Encoding.UTF8.GetBytes("31"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
                 this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_on;
                 flag[3] = true;
                 led = new LedModel()
@@ -300,10 +331,17 @@ namespace WinFormsApp
                     ID = 3,
                     isOn = "on"
                 };
+                history = new HistoryModel()
+                {
+                    time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                    start = "PC",
+                    end = 3,
+                    turn = "on",
+                };
             }
             else
             {
-                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("30"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                clientMqtt.Publish("ltnc/ledcontrol", Encoding.UTF8.GetBytes("30"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
                 this.btnLED3.Image = WinFormsApp.Properties.Resources.lamp_off;
                 flag[3] = false;
                 led = new LedModel()
@@ -311,8 +349,16 @@ namespace WinFormsApp
                     ID = 3,
                     isOn = "off"
                 };
+                history = new HistoryModel()
+                {
+                    time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                    start = "PC",
+                    end = 3,
+                    turn = "off",
+                };
             }
             await RefreshLed(id, led);
+            await CreateHistory(history);
         }
 
         private async void btnLED4_Click(object sender, EventArgs e)
@@ -321,7 +367,7 @@ namespace WinFormsApp
             LedModel led;
             if (!flag[4])
             {
-                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("41"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                clientMqtt.Publish("ltnc/ledcontrol", Encoding.UTF8.GetBytes("41"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
                 this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_on;
                 flag[4] = true;
                 led = new LedModel()
@@ -329,10 +375,17 @@ namespace WinFormsApp
                     ID = 4,
                     isOn = "on"
                 };
+                history = new HistoryModel()
+                {
+                    time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                    start = "PC",
+                    end = 4,
+                    turn = "on",
+                };
             }
             else
             {
-                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("40"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                clientMqtt.Publish("ltnc/ledcontrol", Encoding.UTF8.GetBytes("40"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
                 this.btnLED4.Image = WinFormsApp.Properties.Resources.lamp_off;
                 flag[4] = false;
                 led = new LedModel()
@@ -340,15 +393,23 @@ namespace WinFormsApp
                     ID = 4,
                     isOn = "off"
                 };
+                history = new HistoryModel()
+                {
+                    time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                    start = "PC",
+                    end = 4,
+                    turn = "off",
+                };
             }
             await RefreshLed(id, led);
+            await CreateHistory(history);
         }
 
         private async void btnAllControl_Click(object sender, EventArgs e)
         {
             if (!flag[0])
             {
-                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("01"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                clientMqtt.Publish("ltnc/ledcontrol", Encoding.UTF8.GetBytes("01"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
                 this.btnAllControl.Image = WinFormsApp.Properties.Resources.power_btn_off;
                 flag[0] = true;
                 this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_on;
@@ -368,10 +429,22 @@ namespace WinFormsApp
                     };
                     await RefreshLed(i, led);
                 }
+
+                for (int i = 1; i <= 4; i++)
+                {
+                    history = new HistoryModel()
+                    {
+                        time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                        start = "PC",
+                        end = i,
+                        turn = "on",
+                    };
+                    await CreateHistory(history);
+                }
             }
             else
             {
-                clientMqtt.Publish("Desktop/LEDControl", Encoding.UTF8.GetBytes("00"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
+                clientMqtt.Publish("ltnc/ledcontrol", Encoding.UTF8.GetBytes("00"), MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, false);
                 this.btnAllControl.Image = WinFormsApp.Properties.Resources.power_btn_on;
                 flag[0] = false;
                 this.btnLED1.Image = WinFormsApp.Properties.Resources.lamp_off;
@@ -390,6 +463,18 @@ namespace WinFormsApp
                         isOn = "off"
                     };
                     await RefreshLed(i, led);
+                }
+
+                for (int i = 1; i <= 4; i++)
+                {
+                    history = new HistoryModel()
+                    {
+                        time = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                        start = "PC",
+                        end = i,
+                        turn = "off",
+                    };
+                    await CreateHistory(history);
                 }
             }
         }
@@ -450,6 +535,33 @@ namespace WinFormsApp
                 return await Task.FromResult(false);
             }
         }
+
+        public async Task<bool> CreateHistory(HistoryModel history)
+        {
+            string base_url = "http://ltnc-api.somee.com/api/tbhistory/post";
+            Uri uri = new Uri(string.Format(base_url, string.Empty));
+            try
+            {
+
+                string json = System.Text.Json.JsonSerializer.Serialize<HistoryModel>(history, serializerOptions);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = null;
+                response = await clientHttp.PostAsync(uri, content);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await Task.FromResult(true);
+                }
+                return await Task.FromResult(false);
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(false);
+            }
+        }
+
         public async Task<bool> RefreshLed(int id, LedModel led)
         {
             string base_url = "http://ltnc-api.somee.com/api/tbled/put";
@@ -474,6 +586,7 @@ namespace WinFormsApp
                 return await Task.FromResult(false);
             }
         }
+
         public async Task<bool> DeleteLed(string id)
         {
             string base_url = "http://localhost/ledapi/api/tblleds/{0}";
@@ -499,7 +612,8 @@ namespace WinFormsApp
         private void timer1_Tick(object sender, EventArgs e)
         {
             DateTime dateTime = DateTime.Now;
-            this.lblTime.Text = dateTime.ToString();
+            this.lblTime.Text = dateTime.ToLongTimeString() + "                    ";
+            this.lblDate.Text = dateTime.ToLongDateString();
         }
     }    
 }

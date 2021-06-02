@@ -26,7 +26,7 @@ namespace WebApp.Mqtt
                 {
                     //Subcribe Topic
                     client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
-                    client.Subscribe(new string[] { "Mobile/LEDControl", "Desktop/LEDControl", "Hardware/LEDControl" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE });
+                    client.Subscribe(new string[] { "ltnc/ledcontrol" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE });
                 }
             }
             catch { }
@@ -43,7 +43,7 @@ namespace WebApp.Mqtt
         public static bool PublishMessage(string message)
         {
 
-            int result = client.Publish("Web/LEDControl", Encoding.UTF8.GetBytes(message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+            int result = client.Publish("ltnc/ledcontrol", Encoding.UTF8.GetBytes(message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
             if (result >= 0)
             {
                 Debug.WriteLine($"Publish message successfully.");

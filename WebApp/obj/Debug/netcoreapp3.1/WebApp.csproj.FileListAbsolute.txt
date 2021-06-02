@@ -36,3 +36,9 @@ D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreap
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\WebApp.pdb
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\WebApp.genruntimeconfig.cache
 D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\WebApp.csproj.AssemblyReference.cache
+D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Account\Create.cshtml.g.cs
+D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Account\Error.cshtml.g.cs
+D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
+D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\History.cshtml.g.cs
+D:\tai lieu\Nam 4\20202\Lap trinh nang cao\LTNC-20202\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\_Layout.cshtml.g.cs

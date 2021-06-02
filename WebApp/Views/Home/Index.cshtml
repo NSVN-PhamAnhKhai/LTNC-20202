@@ -1,7 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
+﻿
+@{ ViewData["Title"] = "Home Page"; }
+@model List<LedModel>
 <h2 class="text-center m-3">Smart Home <span id="time" class="m-3"></span></h2>
 <hr />
 <div class="row">
@@ -11,26 +10,26 @@
             <div class="card-body">
                 <div class="m-3">
                     <span class="badge badge-success" style="font-size:15px;">Led 1:</span>
-                    <input class="switch" data-room="1" type="checkbox" data-toggle="toggle" data-onstyle="primary" />
-                    <span class="float-right off" data-room="1"></span>
+                    <input class="switch" data-room="1" ison type="checkbox" data-toggle="toggle" data-onstyle="primary" />
+                    <span class="float-right @Model[0].isOn" data-room="1"></span>
                 </div>
                 <hr />
                 <div class="m-3">
                     <span class="badge badge-success" style="font-size:15px;">Led 2:</span>
                     <input class="switch" data-room="2" type="checkbox" data-toggle="toggle" data-onstyle="primary" />
-                    <span class="float-right off" data-room="2"></span>
+                    <span class="float-right @Model[1].isOn" data-room="2"></span>
                 </div>
                 <hr />
                 <div class="m-3">
                     <span class="badge badge-success" style="font-size:15px;">Led 3:</span>
                     <input class="switch" data-room="3" type="checkbox" data-toggle="toggle" data-onstyle="primary" />
-                    <span class="float-right off" data-room="3"></span>
+                    <span class="float-right @Model[2].isOn" data-room="3"></span>
                 </div>
                 <hr />
                 <div class="m-3">
                     <span class="badge badge-success" style="font-size:15px;">Led 4:</span>
                     <input class="switch" data-room="4" type="checkbox" data-toggle="toggle" data-onstyle="primary" />
-                    <span class="float-right off" data-room="4"></span>
+                    <span class="float-right @Model[3].isOn" data-room="4"></span>
                 </div>
             </div>
             <div class="card-footer">
@@ -38,17 +37,33 @@
                     <input class="btn btn-primary btn-control" type="button" value="Turn on all">
                 </div>
             </div>
+
         </div>
     </div>
 </div>
-
 @section Scripts{
+
     <script>
 
         $(() => {
             toastr.options = {
                 "preventDuplicates": true
             }
+
+            $(document).ready(function () {
+                if ("@Model[0].isOn" == "on") {
+                        $(`.switch[data-room='${1}']`).bootstrapToggle('on', true)
+                }
+                if ("@Model[1].isOn" == "on") {
+                        $(`.switch[data-room='${2}']`).bootstrapToggle('on', true)
+                }
+                if ("@Model[2].isOn" == "on") {
+                        $(`.switch[data-room='${3}']`).bootstrapToggle('on', true)
+                }
+                if ("@Model[3].isOn" == "on") {
+                        $(`.switch[data-room='${4}']`).bootstrapToggle('on', true)
+                }
+            })
 
             $switch = $(".switch")
 
@@ -63,10 +78,12 @@
 
                 var command = switchValue == true ? 'on' : 'off'
                 var message = roomNo + (command == 'on' ? '1' : (command == 'off' ? '0' : ''))
-
+                var time = new Date().toLocaleString()
                 $.ajax({
+
                     url: `/Home/PublishMessage?message=${message}`,
                     method: 'Post',
+
                     success: (result) => {
                         if (switchValue)
                             $(bulbElement).removeClass("off").addClass("on")
@@ -82,14 +99,30 @@
                         toastr.error('Could not complete command. Please try again!')
                     }
                 })
+                $.ajax({
+                    url: `/Home/UpdateLed`,
+                    type: "POST",
+                    cache: false,
+                    data: { id: roomNo, state: command },
+                })
+
+                $.ajax({
+                    url: `/Home/CreateHistory`,         @*string _time, string _start, int _end, string _turn *@
+                    type: "POST",
+                    cache: false,
+                    data: { _time: time, _start: "Web", _end: roomNo, _turn: command },
+                })
 
             })
 
             $btnControl = $(".btn-control")
-            $btnControl.on('click', async function() {
+            $btnControl.on('click', async function () {
                 var textValue = $btnControl.val()
                 var message = (textValue == "Turn on all" ? "01" : (textValue == "Turn off all" ? "00" : ""))
+                var command = textValue == "Turn on all" ? 'on' : 'off'
+                var time = new Date().toLocaleString()
                 $.ajax({
+
                     url: `/Home/PublishMessage?message=${message}`,
                     method: 'Post',
                     success: (result) => {
@@ -97,8 +130,10 @@
                             for (let i = 1; i <= 4; i++) {
                                 $(`.switch[data-room='${i}']`).bootstrapToggle('on', true)
                                 $(`span[data-room='${i}']`).removeClass("off").addClass("on")
+
                             }
                             $btnControl.val("Turn off all")
+
                         }
                         else {
                             for (let i = 1; i <= 4; i++) {
@@ -108,12 +143,27 @@
                             $btnControl.val("Turn on all")
                         }
                         toastr.success('Command completed successfully!')
+
                     },
                     error: (error) => {
                         alert(error)
                         toastr.error('Could not complete command. Please try again!')
                     }
                 })
+                for (var i = 1; i <=4; i++) {
+                    $.ajax({
+                        url: `/Home/UpdateLed`,
+                        type: "POST",
+                        cache: false,
+                        data: { id: i, state: command },
+                    })
+                    $.ajax({
+                        url: `/Home/CreateHistory`,         @* string _time, string _start, int _end, string _turn *@
+                        type: "POST",
+                        cache: false,
+                        data: { _time: time, _start: "Web", _end: i, _turn: command },
+                    })
+                }
             })
 
             setInterval(function () {
@@ -132,17 +182,17 @@
                                         $(`.switch[data-room='${i}']`).bootstrapToggle('on', true)
                                         $(`span[data-room='${i}']`).removeClass("off").addClass("on")
                                     }
-                                    $btnControl.val("Turn off all")     
-                                    toastr.success('Just received the remote command successfully!')
+                                    $btnControl.val("Turn off all")
+                                    /*toastr.success('Just received the remote command successfully!')*/
                                 }
-                                else if (command == 'off'){
+                                else if (command == 'off') {
                                     for (let i = 1; i <= 4; i++) {
                                         $(`.switch[data-room='${i}']`).bootstrapToggle('off', true)
                                         $(`span[data-room='${i}']`).removeClass("on").addClass("off")
                                     }
-                                    $btnControl.val("Turn on all")    
-                                    toastr.success('Just received the remote command successfully!')
-                                }                                
+                                    $btnControl.val("Turn on all")
+                                    /*toastr.success('Just received the remote command successfully!')*/
+                                }
                                 break;
                             case '1':
                             case '2':
@@ -151,13 +201,13 @@
                                 if (command == 'on') {
                                     $(switchElement).bootstrapToggle('on', true)
                                     $(bulbElement).removeClass("off").addClass("on")
-                                    toastr.success('Just received the remote command successfully!')
+                                    /*toastr.success('Just received the remote command successfully!')*/
                                 }
-                                else if (command == 'off'){
+                                else if (command == 'off') {
                                     $(switchElement).bootstrapToggle('off', true)
                                     $(bulbElement).removeClass("on").addClass("off")
-                                    toastr.success('Just received the remote command successfully!')
-                                }                                
+                                    /*toastr.success('Just received the remote command successfully!')*/
+                                }
                                 break;
                             default:
                                 console.log("OK DEFAULT")

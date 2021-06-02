@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "a1tYwxUnon5MzUnL2gCBQEdoCTJjt+1y9cz/eyCdbqfCFphZhJkSeWdo6Rk+1ca4KD8EUZTVhOyUHb5aE2zKQg==",
+  "dgSpecHash": "DYSQu8S0Bpn7SOres9oDIAt1QikBK6GZGUjvnuwWnlOfcumw76BLSi3dglzYvLRXUQfoPmV1GTA7h6NcDbUXkQ==",
   "success": true,
   "projectFilePath": "D:\\tai lieu\\Nam 4\\20202\\Lap trinh nang cao\\LTNC-20202\\WebApp\\WebApp.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\admin\\.nuget\\packages\\m2mqtt\\4.3.0\\m2mqtt.4.3.0.nupkg.sha512"
+    "C:\\Users\\admin\\.nuget\\packages\\m2mqtt\\4.3.0\\m2mqtt.4.3.0.nupkg.sha512",
+    "C:\\Users\\admin\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": [
     {
