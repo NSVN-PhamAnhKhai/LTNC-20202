@@ -176,5 +176,29 @@ namespace WebApp.Controllers
             }
             return null;
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteHistory()
+        {
+            JsonSerializerOptions serializerOptions;
+            serializerOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+            HttpClient httpClient = new HttpClient();
+            string base_url = "http://ltnc-api.somee.com/api/tbhistory/deleteall";
+            Uri uri = new Uri(string.Format(base_url, string.Empty));
+            try
+            {
+                HttpResponseMessage response = await httpClient.DeleteAsync(uri);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
+        }
     }
 }

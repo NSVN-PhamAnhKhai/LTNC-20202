@@ -37,18 +37,18 @@ namespace WebApp.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Verify(Account model)
         {
-            var users = accList.FindAll(x => x.Name == model.Name);            
-            if(users != null)
-            {
-                foreach(var item in users)
+            //var users = accList.FindAll(x => x.Name == model.Name);            
+            //if(users != null)
+            //{
+                foreach(var item in accList)
                 {
-                    if(item.Password == model.Password)
+                    if(item.Password == model.Password && item.Name == model.Name)
                     {
                         HttpContext.Session.SetString("UserLogin", model.Name);
                         return RedirectToAction("Index", "Home");
                     }
                 }
-            }           
+            //}           
             return RedirectToAction("Login", "Account");
         }
 

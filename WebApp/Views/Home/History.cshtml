@@ -1,6 +1,55 @@
 ﻿@model List<HistoryModel>
 @{ Layout = "_Layout";}
 
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>on demo</title>
+    <style>
+        p {
+            background: yellow;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+            p.over {
+                background: #ccc;
+            }
+
+        span {
+            color: darkcyan;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+
+    <button class="btn btn-primary" style="margin-left: 10px">Delete History! </button>
+    <span></span>
+
+    <script>
+        $("body").on("click", "button", function () {
+            alert("Histories were deleted");
+            $.ajax({
+                url: `/Home/DeleteHistory`,
+                type: "Delete",
+                cache: false,
+                data: {},
+            })
+            setTimeout(
+                function () {
+                    location.reload(true);
+                }, 5000);
+
+        });
+
+    </script>
+
+</body>
+</html>
+
 <table class="table table-sm table-striped table-bordered m-2" id="myTable">
     <thead>
         <tr>
