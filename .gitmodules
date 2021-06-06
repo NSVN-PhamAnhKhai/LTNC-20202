@@ -1,0 +1,10 @@
+[submodule "LTNC_WebAPI"]
+	path = LTNC_WebAPI
+	url = https://github.com/datchaos99/LTNC_WebAPI
+[submodule "LTNC_ESP32"]
+	path = LTNC_ESP32
+	url = https://github.com/datchaos99/LTNC_ESP32
+[submodule "MobileApp"]
+	path = MobileApp
+	url = https://github.com/xuandong295/MobileApp
+

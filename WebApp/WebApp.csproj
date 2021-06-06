@@ -9,6 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\lamp-on.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\lamp-on.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="M2Mqtt" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

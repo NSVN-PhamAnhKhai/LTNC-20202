@@ -12,7 +12,7 @@ namespace WebApp.Controllers
     {        
         static List<Account> accList = new List<Account>
         {
-            new Account { Name = "admin", Password = "admin"},          
+            //new Account { Name = "admin", Password = "admin"},          
             new Account { Name = "dongbx", Password = "20172473"},           
             new Account { Name = "datnt", Password = "20172451"},
             new Account { Name = "trungpq", Password = "20172875"},
@@ -56,6 +56,11 @@ namespace WebApp.Controllers
         {
             HttpContext.Session.Remove("UserLogin");
             return RedirectToAction("Login", "Account");
+        }
+
+        public ActionResult AboutUs()
+        {
+            return View();
         }
     }
 }

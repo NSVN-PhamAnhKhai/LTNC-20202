@@ -1,9 +1,12 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Login";
     Layout = "~/Views/_Layout.cshtml";
 }
 @model WebApp.Models.Account
+
+<div>
+    <a class="btn btn-primary float-right" poster asp-area="" asp-controller="Account" asp-action="AboutUs">About us</a>
+</div>
 
 <h1>Spin Login Form </h1>
 <div class="clear-loading spinner">
@@ -28,19 +31,19 @@
                 <a href="#">forgot password?</a>
             </div>
         </div>
-    <!--script for show password-->
-    <script>
-        function myFunction() {
-            var x = document.getElementById("myInput");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
+        <!--script for show password-->
+        <script>
+            function myFunction() {
+                var x = document.getElementById("myInput");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
             }
-        }
-    </script>
-    <!--//end script-->
-    <input type="submit" value="LOGIN">
+        </script>
+        <!--//end script-->
+        <input type="submit" value="LOGIN">
     </form>
 </div>
 <!-- //form ends here -->

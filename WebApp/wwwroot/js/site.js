@@ -152,16 +152,16 @@
                     return true;
                 case "3600000":
                     let oneHour = Number(strVal)
-                    return timeNow - (new Date(strText).getTime()) <= oneHour ? true : false;
+                    return ((timeNow - (new Date(strText).getTime())) >= 0 &&  (timeNow - (new Date(strText).getTime())) <= oneHour) ? true : false;
                 case "86400000":
                     let oneDay = Number(strVal)
-                    return timeNow - (new Date(strText).getTime()) <= oneDay ? true : false;
+                    return ((timeNow - (new Date(strText).getTime())) >= 0 && (timeNow - (new Date(strText).getTime())) <= oneDay) ? true : false;
                 case "604800000":
                     let oneWeek = Number(strVal)
-                    return timeNow - (new Date(strText).getTime()) <= oneWeek ? true : false;
+                    return ((timeNow - (new Date(strText).getTime())) >= 0 && (timeNow - (new Date(strText).getTime())) <= oneWeek) ? true : false;
                 case "2419200000":
                     let oneMonth = Number(strVal)
-                    return timeNow - (new Date(strText).getTime()) <= oneMonth ? true : false;
+                    return ((timeNow - (new Date(strText).getTime())) >= 0 && (timeNow - (new Date(strText).getTime())) <= oneMonth) ? true : false;
                 default:
                     return false;
             }
