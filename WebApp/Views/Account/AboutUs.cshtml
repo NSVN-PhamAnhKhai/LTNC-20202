@@ -1,71 +1,86 @@
-﻿<link href="~/css/site.css" rel="stylesheet" />
-<nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
-    <div class="container">
-        <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
-        <div id="navbarSupportedContent" class="collapse navbar-collapse">
-        </div>
-    </div>
-</nav>
-
-<div class="bg-light">
-    <div class="container py-5">
-        <div class="row h-100 align-items-center py-5">
-            <div class="col-lg-6">
-                <h1 class="display-4">Hello mọi người lại là Chao đây!</h1>
-                <p class="lead text-muted mb-0">
-                    Đây là bài tập lớn lập trình nâng cao của nhóm mình, chúng mình đã mất khá nhiều thời gian dành cho nó
-                    nên hy vọng là mọi người sẽ thích và tiếp tục ủng hộ những sản phẩm tiếp theo của nhóm, many thanks...
-                </p>
-
+﻿@{ ViewData["Title"] = "About us"; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="icon" href="~/images/lamp-on.png" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+        <div class="container">
+            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+            <div id="navbarSupportedContent" class="collapse navbar-collapse">
             </div>
-            <div class="col-lg-6 d-none d-lg-block"><img src="https://www.pngitem.com/pimgs/m/523-5236058_nh-icon-hot-hnh-hd-png-download.png" alt="" height="100" width="100" class="img-fluid"></div>
         </div>
-    </div>
-</div>
+    </nav>
 
-<div class="bg-white py-5">
-    <div class="container py-5">
-        <div class="row align-items-center mb-5">
-            <div class="col-lg-6 order-2 order-lg-1">
-                <i class="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
-                <h2 class="font-weight-light">Đây là hai app của mình</h2>
-                <p class="font-italic text-muted mb-4">Hãy tải về và thử sử dụng demo sản phẩm của chúng tôi ^^~.</p>
-                <a href="https://drive.google.com/file/d/1H4w1BWGJj8DudkxfgBFtvHdZgtF6So3D/view?usp=sharing" target="_blank" class="btn btn-light px-5 rounded-pill shadow-sm">Download</a>
-            </div>
-            <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img src="https://png.pngtree.com/png-vector/20190328/ourlarge/pngtree-paper-plane-icon-design--essential-icon-vector-design-png-image_877615.jpg" alt="" class="img-fluid mb-4 mb-lg-0"></div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col-lg-5 px-5 mx-auto"><img src="https://techvccloud.mediacdn.vn/zoom/650_406/2018/4/10/github-15233486751771246306893-0-45-630-1166-crop-15233486932811484035978.png" alt="" class="img-fluid mb-4 mb-lg-0"></div>
-            <div class="col-lg-6">
-                <i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
-                <h2 class="font-weight-light">Trường mình bắt buộc phải phải có Github màu đen trắng như này nha!</h2>
-                <p class="font-italic text-muted mb-4">Các bạn có thể tham khảo Source Code dự án của chúng mình ở đây...</p>
-                <a href="https://github.com/anhkhai0107/LTNC-20202" target="_blank" class="btn btn-light px-5 rounded-pill shadow-sm">Go to Github</a>
+    <div class="bg-light">
+        <div class="container py-5">
+            <div class="row h-100 align-items-center py-5">
+                <div class="col-lg-6">
+                    <h1 class="display-4">Hello mọi người lại là Chao đây!</h1>
+                    <p class="lead text-muted mb-0">
+                        Đây là bài tập lớn lập trình nâng cao của nhóm mình, chúng mình đã mất khá nhiều thời gian dành cho nó
+                        nên hy vọng là mọi người sẽ thích và tiếp tục ủng hộ những sản phẩm tiếp theo của nhóm, many thanks...
+                    </p>
+
+                </div>
+                <div class="col-lg-6 d-none d-lg-block"><img src="https://www.pngitem.com/pimgs/m/523-5236058_nh-icon-hot-hnh-hd-png-download.png" alt="" height="100" width="100" class="img-fluid"></div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="bg-light py-5">
-    <div class="container py-5">
-        <div class="row mb-4">
-            <div class="col-lg-5">
-                <h2 class="display-4 font-weight-light">Còn đây là team của mình</h2>
-                <p class="font-italic text-muted">Team của mình gồm 5 thành viên, chúng mình là ...</p>
-                <p><a href="https://www.facebook.com/Khaipham0107" target="_blank"> Phạm Anh Khải 20172617 </a></p>
-                <p><a href="https://www.facebook.com/Xuan0599" target="_blank"> Bùi Xuân Đông 20172473 </a></p>
-                <p><a href="https://www.facebook.com/ntdat1999" target="_blank"> Nguyễn Tiến Đạt 20172451 </a></p>
-                <p><a href="https://www.facebook.com/profile.php?id=100048173686020" target="_blank"> Phạm Quốc Trung 20172875 </a></p>
-                <p><a href="https://www.facebook.com/profile.php?id=100010794192055" target="_blank"> Nguyễn Văn Thăng 20172808 </a></p>
-                <p class="font-italic text-muted">Nếu có gì thắc mắc hãy liên hệ với chúng mình ngay để có thể được hỗ trợ nhanh nhất cho bạn nhé!</p>
+    <div class="bg-white py-5">
+        <div class="container py-5">
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6 order-2 order-lg-1">
+                    <i class="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
+                    <h2 class="font-weight-light">Đây là hai app của mình</h2>
+                    <p class="font-italic text-muted mb-4">Hãy tải về và thử sử dụng demo sản phẩm của chúng tôi ^^~.</p>
+                    <a href="https://drive.google.com/drive/folders/155HUJx-EE5_zHa0GrnN-r-3GusGfsW1w?usp=sharing" target="_blank" class="btn btn-light px-5 rounded-pill shadow-sm">Download</a>
+                </div>
+                <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img src="https://png.pngtree.com/png-vector/20190328/ourlarge/pngtree-paper-plane-icon-design--essential-icon-vector-design-png-image_877615.jpg" alt="" class="img-fluid mb-4 mb-lg-0"></div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-5 px-5 mx-auto"><img src="https://techvccloud.mediacdn.vn/zoom/650_406/2018/4/10/github-15233486751771246306893-0-45-630-1166-crop-15233486932811484035978.png" alt="" class="img-fluid mb-4 mb-lg-0"></div>
+                <div class="col-lg-6">
+                    <i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
+                    <h2 class="font-weight-light">Trường mình bắt buộc phải phải có Github màu đen trắng như này nha!</h2>
+                    <p class="font-italic text-muted mb-4">Các bạn có thể tham khảo Source Code dự án của chúng mình ở đây...</p>
+                    <a href="https://github1s.com/anhkhai0107/LTNC-20202" target="_blank" class="btn btn-light px-5 rounded-pill shadow-sm">Go to Github</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-
-<footer class="bg-light pb-5">
-    <div class="container text-center">
-        <p class="font-italic text-muted mb-0">&copy; Copyrights Company.com All rights reserved.</p>
+    <div class="bg-light py-5">
+        <div class="container py-5">
+            <div class="row mb-4">
+                <div class="col-lg-5">
+                    <h2 class="display-4 font-weight-light">Còn đây là team của mình</h2>
+                    <p class="font-italic text-muted">Team của mình gồm 5 thành viên, chúng mình là ...</p>
+                    <p><a href="https://www.facebook.com/Khaipham0107" target="_blank"> Phạm Anh Khải 20172617 </a></p>
+                    <p><a href="https://www.facebook.com/Xuan0599" target="_blank"> Bùi Xuân Đông 20172473 </a></p>
+                    <p><a href="https://www.facebook.com/ntdat1999" target="_blank"> Nguyễn Tiến Đạt 20172451 </a></p>
+                    <p><a href="https://www.facebook.com/profile.php?id=100048173686020" target="_blank"> Phạm Quốc Trung 20172875 </a></p>
+                    <p><a href="https://www.facebook.com/profile.php?id=100010794192055" target="_blank"> Nguyễn Văn Thăng 20172808 </a></p>
+                    <p class="font-italic text-muted">Nếu có gì thắc mắc hãy liên hệ với chúng mình ngay để có thể được hỗ trợ nhanh nhất cho bạn nhé!</p>
+                </div>
+            </div>
+        </div>
     </div>
-</footer>
+
+
+    <footer class="bg-light pb-5">
+        <div class="container text-center">
+            <p class="font-italic text-muted mb-0">&copy; Copyrights Company.com All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
