@@ -24,8 +24,10 @@ namespace WebApp.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            string session = HttpContext.Session.GetString("UserLogin");
-            if (session != null)
+            var cookieValue = Request.Cookies["UserLogin"];
+
+            //string session = HttpContext.Session.GetString("UserLogin");
+            if (cookieValue != null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -44,7 +46,11 @@ namespace WebApp.Controllers
                 {
                     if(item.Password == model.Password && item.Name == model.Name)
                     {
-                        HttpContext.Session.SetString("UserLogin", model.Name);
+                        CookieOptions userCookies = new CookieOptions();
+                        userCookies.Expires = DateTime.Now.AddDays(30);
+                        Response.Cookies.Append("UserLogin", model.Name, userCookies);
+
+                        //HttpContext.Session.SetString("UserLogin", model.Name);
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -54,7 +60,11 @@ namespace WebApp.Controllers
 
         public ActionResult Logout()
         {
-            HttpContext.Session.Remove("UserLogin");
+            CookieOptions userCookies = new CookieOptions();
+            userCookies.Expires = DateTime.Now.AddDays(-1);
+            Response.Cookies.Append("UserLogin", "", userCookies);
+
+            //HttpContext.Session.Remove("UserLogin");
             return RedirectToAction("Login", "Account");
         }
 

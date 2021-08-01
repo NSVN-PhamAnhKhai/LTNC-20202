@@ -13,8 +13,9 @@ namespace WebApp.Controllers
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            string session = HttpContext.Session.GetString("UserLogin");
-            if (session == null)
+            var cookieValue = Request.Cookies["UserLogin"];
+            //string session = HttpContext.Session.GetString("UserLogin");
+            if (cookieValue == null || cookieValue == "")
             {
                 filterContext.Result = new RedirectToRouteResult(new
                     RouteValueDictionary(new { controller = "Account", action = "Login"}));
