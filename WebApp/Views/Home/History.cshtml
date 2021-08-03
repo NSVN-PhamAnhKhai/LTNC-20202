@@ -45,17 +45,21 @@
 
     <script>
         $("body").on("click", "button", function () {
-            alert("Histories were deleted");
-            $.ajax({
-                url: `/Home/DeleteHistory`,
-                type: "Delete",
-                cache: false,
-                data: {},
-            })
-            setTimeout(
-                function () {
-                    location.reload(true);
-                }, 5000);
+            let confirmDelete = confirm("Are you sure you want to delete the history?");
+            //alert("Histories were deleted");
+            if (confirmDelete) {
+                $.ajax({
+                    url: `/Home/DeleteHistory`,
+                    type: "Delete",
+                    cache: false,
+                    data: {},
+                })
+                setTimeout(
+                    function () {
+                        location.reload(true);
+                    }, 5000);
+            }
+            else {  }
 
         });
 
